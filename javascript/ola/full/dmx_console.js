@@ -71,6 +71,13 @@ ola.DmxConsole.prototype.getData = function() {
   return this.data;
 };
 
+/**
+ * Update console data and refresh view to reflect changes
+ */
+ola.DmxConsole.prototype.setData = function(data) {
+  this.data = data;
+  this.update();
+}
 
 /**
  * Reset the console. This resets the underlying data but doesn't update the
@@ -185,8 +192,6 @@ ola.DmxConsole.prototype.setupIfRequired = function() {
   }
   this.setup = true;
 
-  // zero data
-  this._setAllChannels(0);
 };
 
 

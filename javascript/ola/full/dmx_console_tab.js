@@ -41,7 +41,7 @@ ola.DmxConsoleTab = function(element) {
   goog.events.listen(
       this.tick_timer,
       goog.Timer.TICK,
-      this._consoleChanged,
+      this._updateConsole,
       false,
       this);
 
@@ -53,6 +53,7 @@ ola.DmxConsoleTab = function(element) {
       this);
 };
 goog.inherits(ola.DmxConsoleTab, ola.common.BaseUniverseTab);
+
 
 
 /**
@@ -87,3 +88,13 @@ ola.DmxConsoleTab.prototype._consoleChanged = function(e) {
   var data = this.dmx_console.getData();
   ola.common.Server.getInstance().setChannelValues(this.getUniverse(), data);
 };
+
+/**
+ * Updates console with data from olad (if changed elsewhere
+ */
+ola.DmxConsoleTab.prototype._updateConsole = function(e) {
+  var dmx_console = this.dmx_console;
+  ola.common.Server.getInstance().getChannelValues(this.getUniverse(), function(data) {
+    dmx_console.setData(data.dmx);
+  });
+}
